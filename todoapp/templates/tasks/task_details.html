@@ -1,0 +1,16 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block content %}
+
+<h2>Task Details</h2>
+<ul>
+    <li><strong>Title:</strong> {{ task.name }}</li>
+    <li><strong>Description:</strong> {{ task.description }}</li>
+    <li><strong>Status:</strong> {% if task.completed %}Completed{% else %}Pending{% endif %}</li>
+    <li><strong>Created at:</strong> {{ task.created_at }}</li>
+    <li><strong>Last Updated:</strong> {{ task.updated_at }}</li>
+</ul>
+
+<a href="{% url 'tasks:task-update' task.pk %}">Edit Task</a> |
+<a href="{% url 'tasks:index' %}">Back to Task List</a>
+{% endblock %}

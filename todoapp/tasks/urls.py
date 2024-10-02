@@ -8,6 +8,6 @@ urlpatterns = [
     path('', views.TaskList, name="index"),
     path("<int:pk>/", views.TaskDetail, name="task-detail"),
     path("create/", views.TaskCreate, name="task-create"),
-    path("<int:pk>/update/", views.TaskUpdate, name="task-update"),
-    path("<int:pk>/delete/", views.TaskDelete, name="task-delete"),
+    path("update/<int:pk>/", views.TaskUpdate, name="task-update"),
+    path("delete/<int:pk>/", views.TaskDelete, name="task-delete"),
 ]

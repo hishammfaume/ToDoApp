@@ -32,23 +32,25 @@ def TaskCreate(request):
 def TaskUpdate(request, pk):
     task = get_object_or_404(Tasks,pk=pk)
     if request.method == 'POST':
-        form = TaskForm(request.POST, instance=task)
+        form = TaskForm(request.POST, instance=task)# pre fill the form with the current data
         if form.is_valid():
             form.save()
-            return redirect('tasks/task_list.html')
+            return redirect('tasks:index')
     else:
-        form = TaskForm(instance=task)
+        form = TaskForm(instance=task) # if not post render the current for with the task details
     
-    return render(request, 'tasks/task_form.html', {'form': form}, {'task': task})
+    return render(request, 'tasks/edit_task.html', {'form': form})
 
 def TaskDelete(request, pk):
     task =get_object_or_404(Tasks, pk=pk)
     if request.method == 'POST':
         task.delete()
-        return redirect('index')
-    return render(request, 'tasks/task_confirm_delete.html', {'task': task})
+        return redirect('tasks:index')
+    return render(request, 'tasks/task_cofirm_delete.html', {'task': task})
     
     
 
-def TaskDetail(request):
-    pass
+def TaskDetail(request, pk):
+    task = get_object_or_404(Tasks,pk=pk)
+    return render(request, 'tasks/task_details.html', {'task': task})
+    
