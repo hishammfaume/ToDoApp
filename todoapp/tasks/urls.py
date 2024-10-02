@@ -10,4 +10,5 @@ urlpatterns = [
     path("create/", views.TaskCreate, name="task-create"),
     path("update/<int:pk>/", views.TaskUpdate, name="task-update"),
     path("delete/<int:pk>/", views.TaskDelete, name="task-delete"),
+    path("toggle/<int:pk>/", views.TaskToggle, name='task-toggle')
 ]

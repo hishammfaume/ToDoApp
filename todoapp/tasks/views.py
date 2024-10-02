@@ -53,4 +53,9 @@ def TaskDelete(request, pk):
 def TaskDetail(request, pk):
     task = get_object_or_404(Tasks,pk=pk)
     return render(request, 'tasks/task_details.html', {'task': task})
-    
+
+def TaskToggle(request, pk):
+    task = get_object_or_404(Tasks,pk=pk)
+    task.completed = not task.completed
+    task.save()
+    return redirect('tasks:index')

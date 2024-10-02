@@ -1,14 +1,19 @@
 {% extends 'partials/base.html' %}
-{% load static %}
+
 {% block content %}
-<h2>Your Tasks</h2>
-<ul>
+<h2 class="text-center text-3xl font-bold mb-6 text-gray-800">Your Tasks</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     {% for task in tasks %}
-    <li>
-       <a href="{%url 'tasks:task-detail' task.id%}"> {{ task.name }}</a> - {% if task.completed %}Completed{% else %}Pending{% endif %}
-        <a href="{% url 'tasks:task-update' task.id %}">Edit</a>
-        <a href="{% url 'tasks:task-delete' task.id %}">Delete</a>
-    </li>
+    <div class="bg-white rounded-lg shadow-lg p-6">
+        <input type="checkbox" onchange="document.location.href='{% url 'tasks:task-toggle' task.pk %}'" {% if task.completed %}checked{% endif %}>
+       <a href="{%url 'tasks:task-detail' task.pk%}"> <h3 class="text-xl font-semibold mb-2">{{ task.name }}</a></h3>
+        <p class="text-gray-600 mb-4">{{ task.description }}</p>
+        <p class="text-sm text-gray-500">Created: {{ task.created_at }}</p>
+        <div class="flex justify-between mt-4">
+            <a href="{% url 'tasks:task-update' task.pk %}" class="text-blue-500 hover:text-blue-700">Edit</a>
+            <a href="{% url 'tasks:task-delete' task.pk %}" class="text-red-500 hover:text-red-700">Delete</a>
+        </div>
+    </div>
     {% endfor %}
-</ul>
+</div>
 {% endblock %}

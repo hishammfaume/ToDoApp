@@ -1,10 +1,28 @@
 {% extends 'partials/base.html' %}
 {%load static%}
 {% block content %}
-<h2>Are you sure you want to delete "{{ task.name }}"?</h2>
-<form method="POST">
-    {% csrf_token %}
-    <button type="submit">Confirm Delete</button>
-    <a href="{% url 'tasks:index' %}">Cancel</a>
-</form>
+<div class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6 mt-12">
+    <h2 class="text-xl font-bold text-red-600 mb-4 text-center">Are you sure you want to delete this task?</h2>
+    
+    <!-- Task Title for Context -->
+    <p class="text-center text-gray-800 mb-4">Task: <strong>{{ task.name }}</strong></p>
+
+    <!-- Warning Message -->
+    <p class="text-center text-gray-500 mb-6">This action cannot be undone.</p>
+
+    <!-- Delete Form (POST request) -->
+    <form method="POST" class="flex justify-between">
+        {% csrf_token %}
+        
+        <!-- Delete Button -->
+        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
+            Yes, Delete
+        </button>
+
+        <!-- Cancel Button (Back to List) -->
+        <a href="{% url 'tasks:index' %}" class="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded">
+            Cancel
+        </a>
+    </form>
+</div>
 {% endblock %}
