@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,8 +11,8 @@
     <header>
         <h1>My To-Do List</h1>
         <nav>
-            <a href="{% url 'task-list' %}">Home</a>
-            <a href="{% url 'task-create' %}">Add Task</a>
+            <a href="{% url 'tasks:index' %}">Home</a>
+            <a href="{% url 'tasks:task-create' %}">Add Task</a>
         </nav>
     </header>
     <main>
