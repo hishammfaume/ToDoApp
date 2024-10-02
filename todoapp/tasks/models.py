@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.as
 
-class Tasks(models.Models):
+class Tasks(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     completed = models.BooleanField(default=False)
