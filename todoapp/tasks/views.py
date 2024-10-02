@@ -23,7 +23,7 @@ def TaskCreate(request):
             task = form.save(commit=False)
             task.user = request.user
             task.save()
-            return redirect('index')
+            return redirect('tasks:index')
     else:
         form = TaskForm()
     
@@ -35,7 +35,7 @@ def TaskUpdate(request, pk):
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
             form.save()
-            return redirect('index')
+            return redirect('tasks/task_list.html')
     else:
         form = TaskForm(instance=task)
     
