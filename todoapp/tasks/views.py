@@ -7,7 +7,7 @@ from tasks.forms import TaskForm # Make sure you create this form
 
 
 def TaskList(request):
-    tasks = Tasks.objects.all().order_by("-created_at")
+    tasks = Tasks.objects.filter(user=request.user).order_by("-created_at")
     
     context = {
         "tasks": tasks
@@ -23,21 +23,32 @@ def TaskCreate(request):
             task = form.save(commit=False)
             task.user = request.user
             task.save()
-            return redirect('list_tasks')
+            return redirect('index')
     else:
         form = TaskForm()
     
     return render(request, 'tasks/task_form.html', {'form': form})
 
 def TaskUpdate(request, pk):
-    task = get_object_or_404(Tasks,pk)
+    task = get_object_or_404(Tasks,pk=pk)
     if request.method == 'POST':
         form = TaskForm(request.POST, instance=task)
-        if
-    pass
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form = TaskForm(instance=task)
+    
+    return render(request, 'tasks/task_form.html', {'form': form}, {'task': task})
 
-def TaskDelete(request):
-    pass
+def TaskDelete(request, pk):
+    task =get_object_or_404(Tasks, pk=pk)
+    if request.method == 'POST':
+        task.delete()
+        return redirect('index')
+    return render(request, 'tasks/task_confirm_delete.html', {'task': task})
+    
+    
 
 def TaskDetail(request):
     pass
