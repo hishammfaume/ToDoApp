@@ -1,27 +1,56 @@
 {% extends 'partials/base.html' %}
 {% load static %}
 {% block content %}
-<div class="max-w-2xl mx-auto bg-white p-8 rounded shadow my-10">
-    <div class="grid grid-cols-2 gap-4">
-        <!-- Login Form Section -->
-        <div>
-            <h2 class="text-xl mb-4">Login</h2>
-            <form method="POST" action="{% url 'users:login' %}">
-                {% csrf_token %}
-                {{ form_login.as_p }}
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Log In</button>
-            </form>
+<!-- Full-Screen Container with Flex Centering -->
+<div class="h-auto w-full flex items-center justify-center">
+    <!-- Glassmorphism Card Container -->
+    <div id="auth-card" class="relative w-full max-w-lg p-8 bg-white bg-opacity-40 backdrop-blur-md rounded-lg shadow-xl border border-opacity-50 transition-all transform duration-500 ease-in-out">
+        <!-- Header Section with Toggle Buttons for Login/Register -->
+        <div class="flex justify-around mb-6">
+            <button id="login-toggle" class="text-lg font-semibold px-4 py-2 rounded focus:outline-none transition hover:bg-white hover:bg-opacity-60">Login</button>
+            <button id="register-toggle" class="text-lg font-semibold px-4 py-2 rounded focus:outline-none transition hover:bg-white hover:bg-opacity-60">Register</button>
         </div>
+        
+        <!-- Forms Container -->
+        <div id="forms-container" class="relative h-auto">
+            <!-- Login Form Section -->
+            <div id="login-form" class="absolute inset-0 transition-opacity duration-300 ease-in-out">
+                <h2 class="text-2xl mb-4 text-center font-bold">Welcome Back</h2>
+                <form method="POST" class="space-y-4">
+                    {% csrf_token %}
+                    {{ form_login.as_p }}
+                    <button name="login_form" type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200">Log In</button>
+                </form>
+            </div>
 
-        <!-- Registration Form Section -->
-        <div>
-            <h2 class="text-xl mb-4">Create an Account</h2>
-            <form method="POST" action="{% url 'users:register' %}">
-                {% csrf_token %}
-                {{ form_register.as_p }}
-                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">Sign Up</button>
-            </form>
+            <!-- Registration Form Section -->
+            <div id="register-form" class="absolute inset-0 opacity-0 transform scale-90 transition-opacity duration-300 ease-in-out">
+                <h2 class="text-2xl mb-4 text-center font-bold">Join Us Today</h2>
+                <form method="POST" class="space-y-4">
+                    {% csrf_token %}
+                    {{ form_register.as_p }}
+                    <button name="register_form" type="submit" class="w-full bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-200">Sign Up</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
+
+<!-- Adding Tailwind Animations and Toggle Script -->
+<script>
+    // Script to Toggle between Login and Register Forms
+    document.getElementById('login-toggle').addEventListener('click', function() {
+        document.getElementById('login-form').style.opacity = '1';
+        document.getElementById('login-form').style.transform = 'scale(1)';
+        document.getElementById('register-form').style.opacity = '0';
+        document.getElementById('register-form').style.transform = 'scale(0.9)';
+    });
+
+    document.getElementById('register-toggle').addEventListener('click', function() {
+        document.getElementById('register-form').style.opacity = '1';
+        document.getElementById('register-form').style.transform = 'scale(1)';
+        document.getElementById('login-form').style.opacity = '0';
+        document.getElementById('login-form').style.transform = 'scale(0.9)';
+    });
+</script>
 {% endblock %}
