@@ -1,0 +1,27 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white p-8 rounded shadow my-10">
+    <div class="grid grid-cols-2 gap-4">
+        <!-- Login Form Section -->
+        <div>
+            <h2 class="text-xl mb-4">Login</h2>
+            <form method="POST" action="{% url 'users:login' %}">
+                {% csrf_token %}
+                {{ form_login.as_p }}
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Log In</button>
+            </form>
+        </div>
+
+        <!-- Registration Form Section -->
+        <div>
+            <h2 class="text-xl mb-4">Create an Account</h2>
+            <form method="POST" action="{% url 'users:register' %}">
+                {% csrf_token %}
+                {{ form_register.as_p }}
+                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">Sign Up</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

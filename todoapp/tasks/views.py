@@ -3,8 +3,12 @@ from django.shortcuts import render,get_object_or_404
 from django.db.models import Avg,Count
 from tasks.models import *
 from tasks.forms import TaskForm # Make sure you create this form
+from django.contrib.auth.decorators import login_required
+
+
 # Create your views here.
 
+@login_required(login_url='users:landing-page')
 
 def TaskList(request):
     tasks = Tasks.objects.filter(user=request.user).order_by("-created_at")
