@@ -4,7 +4,8 @@ from django.db.models import Avg,Count
 from tasks.models import *
 from tasks.forms import TaskForm # Make sure you create this form
 from django.contrib.auth.decorators import login_required
-
+from rest_framework import generics
+from .serializers import TaskSerializer
 
 # Create your views here.
 
@@ -63,3 +64,11 @@ def TaskToggle(request, pk):
     task.completed = not task.completed
     task.save()
     return redirect('tasks:index')
+
+class TaskListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Tasks.objects.all()
+    serializer_class = TaskSerializer
+    
+class TaskDetailAPIView(generics.RetrieveDestroyAPIView):
+    queryset = Tasks.objects.all()
+    serializer_class =TaskSerializer
