@@ -2,19 +2,19 @@
 {% load static %}
 {% block content %}
 <!-- Full-Screen Container with Flex Centering -->
-<div class="h-auto w-full flex items-center justify-center">
+<div class="h-screen w-full flex items-center justify-center">
     <!-- Glassmorphism Card Container -->
     <div id="auth-card" class="relative w-full max-w-lg p-8 bg-white bg-opacity-40 backdrop-blur-md rounded-lg shadow-xl border border-opacity-50 transition-all transform duration-500 ease-in-out">
         <!-- Header Section with Toggle Buttons for Login/Register -->
         <div class="flex justify-around mb-6">
-            <button id="login-toggle" class="text-lg font-semibold px-4 py-2 rounded focus:outline-none transition hover:bg-white hover:bg-opacity-60">Login</button>
-            <button id="register-toggle" class="text-lg font-semibold px-4 py-2 rounded focus:outline-none transition hover:bg-white hover:bg-opacity-60">Register</button>
+            <button id="login-toggle" name="login_form" class="text-lg font-semibold px-4 py-2 rounded focus:outline-none transition hover:bg-white hover:bg-opacity-60">Login</button>
+            <button id="register-toggle" name="register_form" class="text-lg font-semibold px-4 py-2 rounded focus:outline-none transition hover:bg-white hover:bg-opacity-60">Register</button>
         </div>
         
-        <!-- Forms Container -->
+        <!-- Forms Container with Adjusted Display Styles -->
         <div id="forms-container" class="relative h-auto">
             <!-- Login Form Section -->
-            <div id="login-form" class="absolute inset-0 transition-opacity duration-300 ease-in-out">
+            <div id="login-form" class="form-container active-form">
                 <h2 class="text-2xl mb-4 text-center font-bold">Welcome Back</h2>
                 <form method="POST" class="space-y-4">
                     {% csrf_token %}
@@ -24,7 +24,7 @@
             </div>
 
             <!-- Registration Form Section -->
-            <div id="register-form" class="absolute inset-0 opacity-0 transform scale-90 transition-opacity duration-300 ease-in-out">
+            <div id="register-form" class="form-container hidden-form">
                 <h2 class="text-2xl mb-4 text-center font-bold">Join Us Today</h2>
                 <form method="POST" class="space-y-4">
                     {% csrf_token %}
@@ -39,18 +39,31 @@
 <!-- Adding Tailwind Animations and Toggle Script -->
 <script>
     // Script to Toggle between Login and Register Forms
-    document.getElementById('login-toggle').addEventListener('click', function() {
-        document.getElementById('login-form').style.opacity = '1';
-        document.getElementById('login-form').style.transform = 'scale(1)';
-        document.getElementById('register-form').style.opacity = '0';
-        document.getElementById('register-form').style.transform = 'scale(0.9)';
+    const loginToggle = document.getElementById('login-toggle');
+    const registerToggle = document.getElementById('register-toggle');
+    const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
+
+    loginToggle.addEventListener('click', function() {
+        loginForm.classList.remove('hidden-form');
+        registerForm.classList.add('hidden-form');
     });
 
-    document.getElementById('register-toggle').addEventListener('click', function() {
-        document.getElementById('register-form').style.opacity = '1';
-        document.getElementById('register-form').style.transform = 'scale(1)';
-        document.getElementById('login-form').style.opacity = '0';
-        document.getElementById('login-form').style.transform = 'scale(0.9)';
+    registerToggle.addEventListener('click', function() {
+        registerForm.classList.remove('hidden-form');
+        loginForm.classList.add('hidden-form');
     });
 </script>
+
+<!-- Additional Styles for Visibility Control -->
+<style>
+    /* Form Visibility Control */
+    .hidden-form {
+        display: none;
+    }
+    
+    .active-form {
+        display: block;
+    }
+</style>
 {% endblock %}
