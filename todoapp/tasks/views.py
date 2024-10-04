@@ -6,7 +6,7 @@ from tasks.forms import TaskForm # Make sure you create this form
 from django.contrib.auth.decorators import login_required
 from rest_framework import generics
 from .serializers import TaskSerializer
-
+from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 
 @login_required(login_url='users:landing-page')
@@ -68,7 +68,9 @@ def TaskToggle(request, pk):
 class TaskListCreateAPIView(generics.ListCreateAPIView):
     queryset = Tasks.objects.all()
     serializer_class = TaskSerializer
+    permission_classes =[IsAuthenticated]
     
 class TaskDetailAPIView(generics.RetrieveDestroyAPIView):
     queryset = Tasks.objects.all()
     serializer_class =TaskSerializer
+    permission_classes = [IsAuthenticated]
